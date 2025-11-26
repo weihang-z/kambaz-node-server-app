@@ -9,8 +9,13 @@ import ModulesRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentsRoutes from "./Kambaz/Assignments/routes.js";
 import db from "./Kambaz/Database/index.js";
 import UserRoutes from "./Kambaz/Users/routes.js";
+import mongoose from "mongoose";
+
+const CONNECTION_STRING = process.env.DATABASE_CONNECTION_STRING || "mongodb+srv://kambaz:password1234@kambaz.lpiotlz.mongodb.net/?appName=Kambaz"
+mongoose.connect(CONNECTION_STRING);
 
 const app = express()
+
 app.use(
   cors({
     credentials: true,
@@ -28,16 +33,19 @@ if (process.env.SERVER_ENV !== "development") {
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
+    domain: process.env.SERVER_URL,
   };
 }
 app.use(session(sessionOptions));
 app.use(express.json());
+
 CourseRoutes(app, db);
 ModulesRoutes(app, db);
 AssignmentsRoutes(app, db);
 UserRoutes(app, db);
 Lab5(app)
 Hello(app)
+
 app.listen(process.env.PORT || 4000, () => {
   console.log(`Server is running on port ${process.env.PORT || 4000}`)
 })
