@@ -7,7 +7,6 @@ import cors from "cors";
 import CourseRoutes from "./Kambaz/Courses/routes.js";
 import ModulesRoutes from "./Kambaz/Modules/routes.js";
 import AssignmentsRoutes from "./Kambaz/Assignments/routes.js";
-import db from "./Kambaz/Database/index.js";
 import UserRoutes from "./Kambaz/Users/routes.js";
 import mongoose from "mongoose";
 
@@ -39,10 +38,10 @@ if (process.env.SERVER_ENV !== "development") {
 app.use(session(sessionOptions));
 app.use(express.json());
 
-CourseRoutes(app, db);
-ModulesRoutes(app, db);
-AssignmentsRoutes(app, db);
-UserRoutes(app, db);
+CourseRoutes(app);
+ModulesRoutes(app);
+AssignmentsRoutes(app);
+UserRoutes(app);
 Lab5(app)
 Hello(app)
 
